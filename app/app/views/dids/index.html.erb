@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Dids" %>
+
+<h1>Dids</h1>
+
+<div id="dids">
+  <% @dids.each do |did| %>
+    <b><%= link_to did.day.to_formatted_s(:long_ordinal), edit_did_path(did) %></b>
+    <% did.items.each do |k,v| %>
+      <div><%= Did::ITEMS_TIMES[k.to_i][0] %>: <%= v %></div>
+    <% end %>
+    <br />
+  <% end %>
+</div>
+<br />
+<%= link_to "New did", new_did_path %>

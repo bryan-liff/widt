@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+<div>
+<h3><%= @did.day %></h3>
+</div>
+
+<div>
+<% @did.items.each do |k,v| %>
+  <div><%= Did::ITEMS_TIMES[k.to_i][0] %>: <%= v %></div>
+<% end %>
+</div>
+<br />
+<div>
+  <%= link_to "Edit this did", edit_did_path(@did) %> |
+  <%= link_to "Back to dids", dids_path %>
+  <br />
+  <br />
+  <%= button_to "Destroy this did", @did, method: :delete %>
+</div>

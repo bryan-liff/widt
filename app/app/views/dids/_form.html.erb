@@ -1,0 +1,56 @@
+<script>
+  function fillMe(input_id){
+    const toBeFilled = document.getElementById('did_items_' + input_id);
+    const toBeRemoved = document.getElementById('fill_me_link_' + input_id);
+
+    toBeFilled.value = toBeFilled.placeholder;
+    toBeRemoved.remove();
+  }
+</script>
+
+<%= form_with(model: did) do |form| %>
+  <% if did.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(did.errors.count, "error") %> prohibited this did from being saved:</h2>
+
+      <ul>
+        <% did.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <% Did::ITEMS_TIMES.each_index do |i| %>
+      <br />
+          <label for='did[items][<%= i %>]'>
+            <%= Did::ITEMS_TIMES[i][0] %>
+            <input
+              type='number'
+              name='did[items][<%= i %>]'
+              value='<%= form.object.items&.key?(i.to_s) ? form.object.items[i.to_s] : nil %>'
+              placeholder='<%= Did::ITEMS_TIMES[i][1] %>' id='did_items_<%= i %>'
+              size='3'
+            >
+            <% if !form.object.items&.key?(i.to_s) %>
+              <a href='#' onclick='fillMe("<%= i %>"); return false' id='fill_me_link_<%= i %>'>fill</a>
+            <% end %>
+          </label>
+      <br />
+    <% end %>
+  </div>
+
+  <br />
+
+  <div>
+    <%= form.label :day, style: "display: block" %>
+    <%= form.date_field :day %>
+  </div>
+
+  <br />
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

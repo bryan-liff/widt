@@ -1,0 +1,12 @@
+<% content_for :title, "Editing did" %>
+
+<h1>Editing did</h1>
+
+<%= render "form", did: @did %>
+
+<br>
+
+<div>
+  <%= link_to "Show this did", @did %> |
+  <%= link_to "Back to dids", dids_path %>
+</div>
